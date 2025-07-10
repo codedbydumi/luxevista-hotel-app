@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F0F23"
+    tools:context=".local">
+
+    <!-- Animated Background Gradient -->
+    <View
+        android:id="@+id/backgroundGradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.9"
+        android:background="@android:color/transparent" />
+
+    <!-- Status Bar Overlay -->
+    <View
+        android:id="@+id/statusBarOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#1A1A2E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Back Button with Glass Effect -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/backButtonCard"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="#1A1A2E"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statusBarOverlay">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="Go back"
+            android:padding="14dp"
+            android:src="@android:drawable/ic_menu_revert"
+            android:tint="#FFFFFF" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Modern Header with Glass Effect -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/headerCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="#1A1A2E"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/backButtonCard"
+        app:layout_constraintTop_toBottomOf="@+id/statusBarOverlay">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/headerTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="LOCAL ATTRACTIONS"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1" />
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:background="#6C63FF" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- ScrollView to make the content scrollable -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerCard">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- CardView for Yala National Park -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewYala"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#16213E"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:background="#2E7D32" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="24dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="#2E7D32"
+                                android:text="🦁"
+                                android:textSize="28sp"
+                                android:gravity="center"
+                                android:layout_marginEnd="16dp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/textViewYala"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Yala National Park"
+                                    android:textSize="22sp"
+                                    android:textStyle="bold"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:letterSpacing="0.05" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Premium Safari Experience"
+                                    android:textSize="14sp"
+                                    android:textColor="#B8B8FF"
+                                    android:layout_marginTop="4dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/descriptionYala"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Yala National Park offers exclusive wildlife safaris with chances to see leopards, elephants, and exotic birds in their natural habitat. Experience luxury camping and guided tours."
+                            android:textSize="15sp"
+                            android:layout_marginTop="16dp"
+                            android:textColor="#CCCCCC"
+                            android:lineSpacingExtra="4dp"
+                            android:fontFamily="sans-serif-light" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Starting from $150 per person"
+                            android:textSize="16sp"
+                            android:textColor="#4ECDC4"
+                            android:textStyle="bold"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="sans-serif-medium" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CardView for Kataragama Temple -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewKataragama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#16213E"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:background="#FF9800" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="24dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="#FF9800"
+                                android:text="🏛️"
+                                android:textSize="28sp"
+                                android:gravity="center"
+                                android:layout_marginEnd="16dp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/textViewKataragama"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Kataragama Temple"
+                                    android:textSize="22sp"
+                                    android:textStyle="bold"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:letterSpacing="0.05" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sacred Spiritual Journey"
+                                    android:textSize="14sp"
+                                    android:textColor="#B8B8FF"
+                                    android:layout_marginTop="4dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/descriptionKataragama"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="The Kataragama Temple is a revered pilgrimage site for Buddhists and Hindus alike. Experience the spiritual atmosphere with guided cultural tours and traditional ceremonies."
+                            android:textSize="15sp"
+                            android:layout_marginTop="16dp"
+                            android:textColor="#CCCCCC"
+                            android:lineSpacingExtra="4dp"
+                            android:fontFamily="sans-serif-light" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Guided tours from $25 per person"
+                            android:textSize="16sp"
+                            android:textColor="#4ECDC4"
+                            android:textStyle="bold"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="sans-serif-medium" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- CardView for Tissamaharama Lake -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewTissa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#16213E"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="4dp"
+                        android:background="#2196F3" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="24dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="#2196F3"
+                                android:text="🌊"
+                                android:textSize="28sp"
+                                android:gravity="center"
+                                android:layout_marginEnd="16dp" />
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/textViewTissa"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Tissamaharama Lake"
+                                    android:textSize="22sp"
+                                    android:textStyle="bold"
+                                    android:textColor="#FFFFFF"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:letterSpacing="0.05" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Serene Lake Experience"
+                                    android:textSize="14sp"
+                                    android:textColor="#B8B8FF"
+                                    android:layout_marginTop="4dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/descriptionTissa"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tissamaharama Lake offers tranquil boat rides, premium birdwatching experiences, and sunset dining. Perfect for couples seeking a romantic getaway or nature enthusiasts."
+                            android:textSize="15sp"
+                            android:layout_marginTop="16dp"
+                            android:textColor="#CCCCCC"
+                            android:lineSpacingExtra="4dp"
+                            android:fontFamily="sans-serif-light" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Boat tours from $40 per person"
+                            android:textSize="16sp"
+                            android:textColor="#4ECDC4"
+                            android:textStyle="bold"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="sans-serif-medium" />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Floating Action Indicator -->
+    <View
+        android:id="@+id/floatingIndicator"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="#6C63FF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
