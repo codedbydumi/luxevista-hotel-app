@@ -33,7 +33,7 @@
 - **Framework:** Android SDK  
 - **IDE:** Android Studio  
 - **Design:** Material Design with dark mode  
-- **Build:** Gradle Kotlin DSL
+- **Build:** Gradle Kotlin DSL - 
 
 ---
 
