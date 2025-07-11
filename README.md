@@ -23,7 +23,7 @@
 
 | Home | Booking Details | Room Listing |
 |------|------------------|--------------|
-| ![](screenshots/home.jpg) | ![](screenshots/booking.jpg) | ![](screenshots/rooms.jpg) |
+| ![](screenshots/homee.jpg) | ![](screenshots/booking.jpg) | ![](screenshots/rooms.jpg) |
 
 ---
 
