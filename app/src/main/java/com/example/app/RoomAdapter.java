@@ -1,25 +1,30 @@
 package com.example.app;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
-
     private List<Room> roomList;
-    private Context context;
+    private Context context;  // Now properly recognized with the import
 
     public RoomAdapter(List<Room> roomList, Context context) {
         this.roomList = roomList;
@@ -36,51 +41,91 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     @Override
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         Room room = roomList.get(position);
-
         holder.roomNumber.setText(room.getRoomNumber());
-
-        // Set different details based on room position/number
         setRoomDetails(holder, position, room.getRoomNumber());
 
-        // Handle the "Book" button click
-        holder.bookBtn.setOnClickListener(v -> {
-            showDatePickerDialog(v, room);
-        });
+        holder.bookBtn.setOnClickListener(v -> showDatePickerDialog(v, room));
     }
 
-    // Method to set different details for each room
     private void setRoomDetails(RoomViewHolder holder, int position, String roomNumber) {
-        switch (position % 6) { // Cycle through 6 different room types
-            case 0:
-                holder.roomDescription.setText("Luxurious ocean view suite with king bed, private balcony, marble bathroom, and complimentary champagne service.");
-                holder.roomPrice.setText("$450 per night");
-                holder.availabilityStatus.setText("Available - Premium Suite");
-                break;
-            case 1:
-                holder.roomDescription.setText("Cozy standard room with queen bed, city view, free WiFi, and continental breakfast included.");
-                holder.roomPrice.setText("$120 per night");
-                holder.availabilityStatus.setText("Available - Great Value");
-                break;
-            case 2:
-                holder.roomDescription.setText("Spacious family room with two double beds, kitchenette, living area, and kids' entertainment center.");
-                holder.roomPrice.setText("$280 per night");
-                holder.availabilityStatus.setText("Available - Family Special");
-                break;
-            case 3:
-                holder.roomDescription.setText("Executive business suite with work desk, conference setup, premium internet, and 24/7 concierge.");
-                holder.roomPrice.setText("$380 per night");
-                holder.availabilityStatus.setText("Available - Business Class");
-                break;
-            case 4:
-                holder.roomDescription.setText("Romantic honeymoon suite with jacuzzi, rose petals, champagne, candlelit dinner, and spa access.");
-                holder.roomPrice.setText("$520 per night");
-                holder.availabilityStatus.setText("Available - Romance Package");
-                break;
-            case 5:
-                holder.roomDescription.setText("Budget-friendly single room with twin bed, shared bathroom, basic amenities, and free parking.");
-                holder.roomPrice.setText("$80 per night");
-                holder.availabilityStatus.setText("Available - Budget Option");
-                break;
+        String roomType = BookingDatabaseHelper.getRoomType(roomNumber);
+        double basePrice = roomType.contains("Deluxe") ? 150 : roomType.contains("Suite") ? 200 : 100;
+
+        holder.roomDescription.setText(getRoomDescription(roomType));
+        holder.roomPrice.setText(String.format(Locale.getDefault(), "$%.2f per night", basePrice));
+        holder.availabilityStatus.setText("Available - " + roomType);
+    }
+
+    private String getRoomDescription(String roomType) {
+        switch (roomType) {
+            case "Deluxe Room": return "Spacious room with premium amenities";
+            case "Suite": return "Luxurious suite with separate living area";
+            default: return "Comfortable standard room with all basic amenities";
+        }
+    }
+
+    private void showDatePickerDialog(View view, Room room) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        new DatePickerDialog(context,
+                (startView, startYear, startMonth, startDay) -> {
+                    String startDate = String.format(Locale.getDefault(), "%d-%d-%d", startYear, startMonth+1, startDay);
+                    new DatePickerDialog(context,
+                            (endView, endYear, endMonth, endDay) -> {
+                                String endDate = String.format(Locale.getDefault(), "%d-%d-%d", endYear, endMonth+1, endDay);
+                                storeBookingInfo(room.getRoomNumber(), startDate, endDate);
+                            }, year, month, day).show();
+                }, year, month, day).show();
+    }
+
+    private void storeBookingInfo(String roomNumber, String startDate, String endDate) {
+        new Thread(() -> {
+            try {
+                SharedPreferences prefs = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+                String userEmail = prefs.getString("user_email", "user@example.com");
+
+                BookingDatabaseHelper dbHelper = new BookingDatabaseHelper(context);
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                String roomType = BookingDatabaseHelper.getRoomType(roomNumber);
+                int nights = calculateNights(startDate, endDate);
+                double roomCost = BookingDatabaseHelper.calculateRoomCost(roomType, nights);
+
+                ContentValues values = new ContentValues();
+                values.put(BookingDatabaseHelper.COLUMN_EMAIL, userEmail);
+                values.put(BookingDatabaseHelper.COLUMN_ROOM_NUMBER, roomNumber);
+                values.put(BookingDatabaseHelper.COLUMN_ROOM_TYPE, roomType);
+                values.put(BookingDatabaseHelper.COLUMN_START_DATE, startDate);
+                values.put(BookingDatabaseHelper.COLUMN_END_DATE, endDate);
+                values.put(BookingDatabaseHelper.COLUMN_ROOM_COST, roomCost);
+                values.put(BookingDatabaseHelper.COLUMN_TOTAL_COST, roomCost);
+
+                long result = db.insert(BookingDatabaseHelper.TABLE_BOOKINGS, null, values);
+
+                ((Activity) context).runOnUiThread(() -> {
+                    if (result != -1) {
+                        Toast.makeText(context, roomType + " booked successfully!", Toast.LENGTH_SHORT).show();
+                        ((Activity) context).recreate();
+                    } else {
+                        Toast.makeText(context, "Booking failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private int calculateNights(String startDate, String endDate) {
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            long diff = format.parse(endDate).getTime() - format.parse(startDate).getTime();
+            return (int) (diff / (1000 * 60 * 60 * 24));
+        } catch (ParseException e) {
+            return 1;
         }
     }
 
@@ -101,43 +146,5 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             availabilityStatus = itemView.findViewById(R.id.availabilityStatus);
             bookBtn = itemView.findViewById(R.id.bookBtn);
         }
-    }
-
-    // Method to show date picker dialog
-    private void showDatePickerDialog(View view, Room room) {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog startDatePicker = new DatePickerDialog(view.getContext(),
-                (view1, year1, month1, day1) -> {
-                    String startDate = year1 + "-" + (month1 + 1) + "-" + day1;
-                    DatePickerDialog endDatePicker = new DatePickerDialog(view.getContext(),
-                            (view12, year2, month2, day2) -> {
-                                String endDate = year2 + "-" + (month2 + 1) + "-" + day2;
-                                storeBookingInfo(room.getRoomNumber(), startDate, endDate);
-                            }, year, month, day);
-                    endDatePicker.show();
-                }, year, month, day);
-
-        startDatePicker.show();
-    }
-
-    // Method to store booking information in SQLite
-    private void storeBookingInfo(String roomNumber, String startDate, String endDate) {
-        String userEmail = "user@example.com";  // This should be retrieved dynamically, like from shared preferences or a login screen.
-
-        BookingDatabaseHelper dbHelper = new BookingDatabaseHelper(context);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(BookingDatabaseHelper.COLUMN_EMAIL, userEmail);
-        values.put(BookingDatabaseHelper.COLUMN_ROOM_NUMBER, roomNumber);
-        values.put(BookingDatabaseHelper.COLUMN_START_DATE, startDate);
-        values.put(BookingDatabaseHelper.COLUMN_END_DATE, endDate);
-
-        db.insert(BookingDatabaseHelper.TABLE_BOOKINGS, null, values);
-        db.close();
     }
 }

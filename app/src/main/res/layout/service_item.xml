@@ -8,8 +8,7 @@
     android:layout_margin="16dp"
     app:cardBackgroundColor="#1A1A2E"
     app:cardCornerRadius="24dp"
-    app:cardElevation="16dp"
-    tools:context=".services">
+    app:cardElevation="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +28,7 @@
             android:orientation="vertical"
             android:padding="28dp">
 
-            <!-- Service Header with Icon -->
+            <!-- Service Header with Icon/Image -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,22 +40,20 @@
                     android:id="@+id/serviceImage"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="#6C63FF"
-                    android:src="@drawable/kk"
+                    android:background="@drawable/service_icon_bg"
                     android:scaleType="centerInside"
                     android:padding="8dp"
-                    android:layout_marginEnd="16dp" />
+                    android:layout_marginEnd="16dp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/serviceIcon"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="#6C63FF"
+                    android:background="@drawable/service_icon_bg"
                     android:gravity="center"
-                    android:text="🛎️"
                     android:textSize="24sp"
-                    android:layout_marginEnd="16dp"
-                    android:visibility="gone" />
+                    android:layout_marginEnd="16dp" />
 
                 <TextView
                     android:id="@+id/serviceTitle"
@@ -131,8 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="12dp"
-                android:visibility="visible">
+                android:layout_marginBottom="12dp">
 
                 <TextView
                     android:layout_width="120dp"
@@ -159,8 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="24dp"
-                android:visibility="visible">
+                android:layout_marginBottom="24dp">
 
                 <TextView
                     android:layout_width="120dp"

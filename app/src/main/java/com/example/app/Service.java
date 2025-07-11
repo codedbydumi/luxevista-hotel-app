@@ -4,25 +4,46 @@ public class Service {
     private String serviceId;
     private String serviceName;
     private int imageResourceId;
+    private String serviceIcon;
     private String description;
     private double price;
+    private boolean isBooked;
 
-    // Constructor matching your current usage (String, String, int)
+    // Constructor with image resource
     public Service(String serviceId, String serviceName, int imageResourceId) {
-        this.serviceId = serviceId;
-        this.serviceName = serviceName;
-        this.imageResourceId = imageResourceId;
-        this.description = "";
-        this.price = 0.0;
+        this(serviceId, serviceName, imageResourceId, "Professional service with premium quality", 0.0);
     }
 
-    // Constructor with all fields
+    // Constructor with image resource and details
     public Service(String serviceId, String serviceName, int imageResourceId, String description, double price) {
         this.serviceId = serviceId;
         this.serviceName = serviceName;
         this.imageResourceId = imageResourceId;
         this.description = description;
         this.price = price;
+        this.isBooked = false;
+        this.serviceIcon = getDefaultIcon(serviceName);
+    }
+
+    // Constructor with icon (for booked services)
+    public Service(String serviceId, String serviceName, String serviceIcon, String description, double price) {
+        this.serviceId = serviceId;
+        this.serviceName = serviceName;
+        this.serviceIcon = serviceIcon;
+        this.description = description;
+        this.price = price;
+        this.isBooked = false;
+        this.imageResourceId = 0;
+    }
+
+    // Helper method to get default icon based on service name
+    private String getDefaultIcon(String serviceName) {
+        if (serviceName.toLowerCase().contains("clean")) return "🧹";
+        if (serviceName.toLowerCase().contains("laundry")) return "👕";
+        if (serviceName.toLowerCase().contains("spa")) return "💆";
+        if (serviceName.toLowerCase().contains("transport")) return "🚗";
+        if (serviceName.toLowerCase().contains("restaurant")) return "🍽️";
+        return "🛎️"; // Default icon
     }
 
     // Getters
@@ -38,12 +59,20 @@ public class Service {
         return imageResourceId;
     }
 
+    public String getServiceIcon() {
+        return serviceIcon;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public double getPrice() {
         return price;
+    }
+
+    public boolean isBooked() {
+        return isBooked;
     }
 
     // Setters
@@ -59,6 +88,10 @@ public class Service {
         this.imageResourceId = imageResourceId;
     }
 
+    public void setServiceIcon(String serviceIcon) {
+        this.serviceIcon = serviceIcon;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -67,14 +100,20 @@ public class Service {
         this.price = price;
     }
 
+    public void setBooked(boolean booked) {
+        isBooked = booked;
+    }
+
     @Override
     public String toString() {
         return "Service{" +
                 "serviceId='" + serviceId + '\'' +
                 ", serviceName='" + serviceName + '\'' +
                 ", imageResourceId=" + imageResourceId +
+                ", serviceIcon='" + serviceIcon + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
+                ", isBooked=" + isBooked +
                 '}';
     }
 }

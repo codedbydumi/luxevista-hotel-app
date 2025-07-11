@@ -1,7 +1,6 @@
 package com.example.app;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,11 +40,11 @@ public class bookrooms extends AppCompatActivity {
 
     private void loadRoomData() {
         // Add room data with image resource IDs
-        roomList.add(new Room("101", "Yes", "High", R.drawable.kk));
-        roomList.add(new Room("102", "No", "Medium", R.drawable.kk));
-        roomList.add(new Room("103", "Yes", "Luxury", R.drawable.kk));
-        roomList.add(new Room("104", "No", "Basic", R.drawable.kk));
-        roomList.add(new Room("105", "Yes", "High", R.drawable.kk));
+        roomList.add(new Room("101", "Yes", "High", R.drawable.ic_restaurant));
+        roomList.add(new Room("102", "No", "Medium", R.drawable.ic_restaurant));
+        roomList.add(new Room("103", "Yes", "Luxury", R.drawable.ic_restaurant));
+        roomList.add(new Room("104", "No", "Basic", R.drawable.ic_restaurant));
+        roomList.add(new Room("105", "Yes", "High", R.drawable.ic_restaurant));
         // Add more rooms as needed...
 
         roomAdapter.notifyDataSetChanged();

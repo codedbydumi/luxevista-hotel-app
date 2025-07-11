@@ -51,7 +51,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Total Cost:"
+                android:text="Total Booked Cost:"
                 android:textColor="#B8B8FF"
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-light" />
@@ -60,7 +60,7 @@
                 android:id="@+id/totalCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$245.00"
+                android:text="$0.00"
                 android:textColor="#4ECDC4"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -91,7 +91,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Booking Information"
+                android:text="My Bookings"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
@@ -99,7 +99,7 @@
                 android:gravity="center"
                 android:layout_margin="20dp" />
 
-            <!-- Room Information Card -->
+            <!-- Room Information Card (matches your existing code) -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/roomInfoCard"
                 android:layout_width="match_parent"
@@ -204,7 +204,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="12dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -224,23 +225,34 @@
                             android:textStyle="bold"
                             android:fontFamily="sans-serif-medium" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Room Cost: "
+                            android:textColor="#B8B8FF"
+                            android:textSize="14sp"
+                            android:fontFamily="sans-serif-light" />
+
+                        <TextView
+                            android:id="@+id/roomCost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="$200.00"
+                            android:textColor="#4ECDC4"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="sans-serif-medium" />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Booking Services Title -->
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Booked Services"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:layout_margin="20dp" />
-
-            <!-- Booked Room Info TextView -->
+            <!-- Booked Room Status TextView -->
             <TextView
                 android:id="@+id/bookedRoomTextView"
                 android:layout_width="match_parent"
@@ -252,19 +264,54 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_margin="16dp"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
-            <!-- Services RecyclerView -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/servicesRecyclerView"
+            <!-- Additional Services Section -->
+            <LinearLayout
+                android:id="@+id/additionalServicesSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:scrollbars="vertical"
-                android:nestedScrollingEnabled="false"
-                android:overScrollMode="never" />
+                android:orientation="vertical">
 
-            <!-- No Bookings Message (hidden by default) -->
+                <!-- Booked Services Title -->
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Booked Services"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:layout_margin="20dp" />
+
+                <!-- Services RecyclerView -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/servicesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:scrollbars="vertical"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never" />
+
+            </LinearLayout>
+
+            <!-- No Services Message -->
+            <TextView
+                android:id="@+id/noServicesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="No additional services booked"
+                android:textSize="16sp"
+                android:textColor="#B8B8FF"
+                android:fontFamily="sans-serif-light"
+                android:visibility="gone"
+                android:layout_margin="32dp" />
+
+            <!-- No Bookings Message (original from your layout) -->
             <TextView
                 android:id="@+id/bookingsTextView"
                 android:layout_width="wrap_content"
@@ -276,6 +323,45 @@
                 android:fontFamily="sans-serif-light"
                 android:visibility="gone"
                 android:layout_margin="32dp" />
+
+            <!-- No Bookings Message -->
+            <LinearLayout
+                android:id="@+id/noBookingsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_margin="32dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📋"
+                    android:textSize="48sp"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:id="@+id/noBookingsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No bookings found"
+                    android:textSize="18sp"
+                    android:textColor="#B8B8FF"
+                    android:fontFamily="sans-serif-medium"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You haven't booked any rooms or services yet"
+                    android:textSize="14sp"
+                    android:textColor="#6C6C8C"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
