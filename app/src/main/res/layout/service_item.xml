@@ -40,7 +40,7 @@
                     android:id="@+id/serviceImage"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@drawable/service_icon_bg"
+                    android:background="@drawable/ic_launcher_background"
                     android:scaleType="centerInside"
                     android:padding="8dp"
                     android:layout_marginEnd="16dp"
@@ -50,7 +50,7 @@
                     android:id="@+id/serviceIcon"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="@drawable/service_icon_bg"
+                    android:background="@drawable/ic_launcher_foreground"
                     android:gravity="center"
                     android:textSize="24sp"
                     android:layout_marginEnd="16dp" />
