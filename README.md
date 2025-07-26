@@ -64,7 +64,7 @@ luxevista-hotel-app/
 
 ---
 
-## 🧾 License
+## 🧾License
 
 This project is licensed under the [MIT License](LICENSE).
 
